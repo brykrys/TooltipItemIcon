@@ -1,0 +1,183 @@
+TooltipItemIcon 1.76
+
+Adds icons to your tooltips.
+
+Displays icons for Items, Spells and many other things.
+
+Frame mode adds the icon as a small extra frame attached to the side of the tooltip. The icon frame can be moved to different locations around the tooltip.
+
+Inside mode adds the icon inside the tooltip, in the top right corner.
+
+Title mode adds the icon inside the tooltip, in the top left corner. (This mode may cause compatibility issues with a few other AddOns, in which case try another mode.)
+
+Background mode uses the icon as a background for the tooltip.
+
+
+***
+
+Some people dislike having icons on the tooltip that pops up when you hold your mouse over an item (GameTooltip), and the comparison tooltips that appear when you hold your mouse over an item in a shop (ShoppingTooltip1 & 2). You can fix this by typing the following commands into your chat edit box:
+
+/ttii gametooltip off
+/ttii shoppingtooltip off
+
+The following command will turn off icons for all comparison-type tooltips supported by TooltipItemIcon:
+
+/ttii compare off
+
+Additionally you can turn off the icons for some of the different types of tooltip using one or more of the following commands:
+
+/ttii item off
+/ttii spell off
+/ttii achievement off
+
+***
+
+Version history:
+
+1.771 Beta
+- TOC Update for WoW 9.0
+- Fix Spell icons
+- Fix errors from Currency
+
+1.73 - 1.77
+- Various TOC updates
+
+1.72
+- TOC Update for WoW 7.1
+- Icons for toys in Toy Box, and for Equipment Manager sets, thanks to Resike
+(skipped version 1.71)
+
+1.65 - 1.70
+- Various TOC updates
+
+1.64
+- TOC Update for WoW 5.2
+- Change for GetCurrencyInfo now returning full texture path
+
+1.63
+- TOC Update for WoW 5.1
+- Better currency support
+
+1.62
+- TOC Update for WoW 5.0
+- Support for currency tokens
+
+1.61
+- TOC update for WoW 4.3
+
+1.60
+- TOC update for WoW 4.2
+
+1.59
+- TOC update for WoW 4.1
+- Minor fix for Inside mode in Comparison tooltips
+
+1.58
+- TOC update for WoW 4.0
+
+1.57
+- Support for the new ItemRef shopping tooltips
+- Changes the default location for the ItemRef Frame-mode icon to top-left (otherwise it clashes with the new shopping tooltips)
+
+1.562 (beta)
+- Adds new mode: title mode. Similar to inside mode, but displays the icon to the left of the title
+- In inside mode, changes how line height adjustment is calculated for larger icons
+
+1.56
+- TOC update for WoW3.3
+
+1.55
+- TOC update for WoW3.2
+
+1.541
+- Improvement to spell icon detection
+
+1.54
+- TOC Update
+
+1.536
+- Fix for truncating multiline text in tooltips after displaying a large icon in Inside mode
+
+1.535
+[inside mode]
+- Improvement to adjust tooltip layout if the size of the icon is particularly large
+[background mode]
+- Adds fade setting which reduces the brightness of the colours in the icon to make a more suitable background image
+- Converts old alpha setting into new fade setting
+- Should fix some problems people were seeing after reloading UI a few times
+
+1.53
+- Fix for displaying incorrect icon in ItemRefTooltip if previous item was closed by clicking the chat link
+- Fix for changing size in inside mode not taking effect until mode change or reloadUI
+
+1.52
+- Adds slash commands to disable icons for items; fixes slash command to disable icons for spells
+- Fixes display of inside-mode icon in ShoppingTooltips (Blizzard Compare tooltips)
+
+1.515
+- Can display icons for Achievements
+- Improvements to configuration code (slash commands)
+- Other code improvements for WoW patch 3.0.8
+
+1.51
+- TOC update for WoW3.0+
+- Code cleanup for release
+
+1.505
+- icons for spells in your spellbook
+- icons for spells on ItemRefTooltip (from chat links)
+- option for disable spell icons: /ttii spell off
+
+1.5
+- Release version: code cleanup and tweaks
+- When used with some other tooltip addons, can display spell icons
+
+1.45
+- Slash command system changed considerably: 'location' command replaced, 'gametooltip' and 'compare' commands work differently.
+- Changed saved variables due to above changes - several settings will need to be re-set
+
+1.44
+- Slash command to place the icon frame at different locations around the tooltip. See commands.txt
+- Some changes to the functions that other AddOns use to hook TooltipItemIcon (changes were required to make the new slash command work). See developer.txt
+
+1.43
+- Support for GameTooltip and the 2 comparison tooltips (ShoppingTooltip1 & 2)
+- Slash commands to disable gametooltip and compare tooltip icons if preferred
+
+1.42
+- Updated TOC for WoW 2.4
+- Almost completely re-written:
+- Recoded to use the new GetItemIcon function provided by WoW 2.4
+- Different ways of displaying the icon - called 'modes'
+- slash command handler added - to change mode
+- Saved Variables added - to save the current mode settings
+- Changed the way the frames are created - this reduces the number of globals and allows me to do without the .xml file
+- New exported function: TooltipItemIcon_HookFrame
+- Changed the hooking method for ItemRefTooltip - should prevent incorrect icons showing up following changes in the 2.4 patch (uses the same method as TooltipItemIcon_HookFrame)
+
+
+1.41
+- Coded to accept TooltipItemIcon_Display (frame) - i.e. if second paramater is nil, defaults to hide icon frame
+- Other minor tweaks
+
+1.4
+- Update for WoW 2.3
+- Always hides icon for crafting recipes for ItemRefTooltip
+
+1.3
+- Update for WoW 2.2
+
+1.2
+- Second fix for ItemRef tooltip icon not always showing the correct icon
+
+1.11
+- Fix for problem when ItemRefTooltip and LinkWrangler windows open at same time
+
+1.1
+- Rewrite for compatability with LinkWrangler 1.6
+
+1.0.4
+- Update and fixes for WoW 2.0 by Amavana
+
+Based on a version by Freddy
+http://wow.curse.com/downloads/details/2173/
