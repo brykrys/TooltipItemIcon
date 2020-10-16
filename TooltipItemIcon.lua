@@ -7,8 +7,8 @@
 -- See end of file for global exports
 -- Documentation can be found in commands.txt and developer.txt
 
-local version = 1.771
--- beta
+local version = 1.78
+-- Release
 
 --------------------------------------------------------------------------------
 -- VARIABLES
@@ -222,14 +222,11 @@ local function GetTextureFromLink(link)
 		elseif linkType == "currency" then
 			if options.token then
 				local texpath
-				if C_CurrencyInfo and C_CurrencyInfo.GetCurrencyInfoFromLink then -- ### beta: do we need all these checks?
+				if C_CurrencyInfo then
 					local info = C_CurrencyInfo.GetCurrencyInfoFromLink(link)
 					if info then
 						texpath = info.iconFileID
 					end
-				elseif GetCurrencyInfo then
-					local _, _, t = GetCurrencyInfo(id) -- ### beta: not sure if anything still uses this?
-					texpath = t
 				end
 				if texpath then
 					return texpath
@@ -490,6 +487,7 @@ end
 
 -- Hook for frame:SetCurrencyToken
 local function HookCurrencyToken(frame, currency)
+	local texpath
 	if not options.token then
 		return
 	end
@@ -498,15 +496,11 @@ local function HookCurrencyToken(frame, currency)
 		return
 	end
 	-- here currency is an index into your own currency list
-	local texpath
-	if C_CurrencyInfo and C_CurrencyInfo.GetCurrencyListInfo then -- ### beta: do we need this full check?
+	if C_CurrencyInfo then
 		local info = C_CurrencyInfo.GetCurrencyListInfo(currency)
 		if info then
 			texpath = info.iconFileID
 		end
-	elseif GetCurrencyListInfo then
-		local _,_,_,_,_,_,t = GetCurrencyListInfo(currency) -- ### beta: not sure if anything now uses this, as Classic does not have currency?
-		texpath = t
 	end
 	if texpath then
 		DisplayIconDispatch(data, texpath)
@@ -523,14 +517,11 @@ local function HookCurrencyByID(frame, currencyID)
 		return
 	end
 	local texpath
-	if C_CurrencyInfo and C_CurrencyInfo.GetCurrencyInfo then -- ### beta: do we need all these checks?
-		local info = C_CurrencyInfo.GetCurrencyInfo(currencyID) -- ### beta: check this is the right call for currencyID?
+	if C_CurrencyInfo then
+		local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 		if info then
 			texpath = info.iconFileID
 		end
-	elseif GetCurrencyInfo then
-		local _,_,t = GetCurrencyInfo(currencyID) -- ### beta: not sure if anything still uses this?
-		texpath = t
 	end
 	if texpath then
 		DisplayIconDispatch(data, texpath)
