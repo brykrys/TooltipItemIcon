@@ -1,7 +1,19 @@
-## Interface: 90001
-## Version: 1.78
 ## Notes: Adds the icon for the displayed item to the tooltip
 ## Author: brykrys
 ## SavedVariables: TooltipItemIcon_Saved
-## X-Date: 16 October 2020
+
+## Version: 1.781
+## X-Release: Release
+## X-Date: 13 November 2020
+
+#@retail@
+## Interface: 90001
+#@end-retail@
+#@non-retail@
+# ## Interface: 11305
+#@end-non-retail@
+
+## X-Curse-Project-ID: 3608
+## X-WoWI-ID: 11411
+
 TooltipItemIcon.lua

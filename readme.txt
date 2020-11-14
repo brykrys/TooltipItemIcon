@@ -35,12 +35,10 @@ Additionally you can turn off the icons for some of the different types of toolt
 Version history:
 
 1.78
-- As 1.771 Beta, with some cleanup
-
-1.771 Beta
 - TOC Update for WoW 9.0
 - Fix Spell icons
 - Fix errors from Currency
+- Some code cleanup
 
 1.73 - 1.77
 - Various TOC updates

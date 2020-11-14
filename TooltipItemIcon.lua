@@ -7,8 +7,8 @@
 -- See end of file for global exports
 -- Documentation can be found in commands.txt and developer.txt
 
-local version = 1.78
--- Release
+local VERSION = tonumber(GetAddOnMetadata("TooltipItemIcon", "Version")) or 0
+local VERSIONINFO = GetAddOnMetadata("TooltipItemIcon", "X-Release") or "Alpha"
 
 --------------------------------------------------------------------------------
 -- VARIABLES
@@ -52,7 +52,8 @@ local GetAchievementInfo = GetAchievementInfo
 
 local function DefaultSavedVariables()
 	return {
-		version = version,
+		version = VERSION,
+		versioninfo = VERSIONINFO,
 		mode = "frame",
 		options = {
 			item = true,
@@ -889,7 +890,7 @@ local function SlashCommand (cmd)
 	if pos then
 		_,_,extra = strfind (cmd, "%s+(.+)", pos+1)
 	else
-		Print ("TooltipItemIcon version %g. Mode %s", version, saved.mode)
+		Print ("TooltipItemIcon version %g. Mode %s", VERSION, saved.mode)
 		return
 	end
 	extra = extra or ""

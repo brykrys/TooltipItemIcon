@@ -1,0 +1,9 @@
+Version 1.781
+
+- New files/data for Packager added
+
+Version 1.78
+
+- Fix Spell icons
+
+- Fix errors from Currency
