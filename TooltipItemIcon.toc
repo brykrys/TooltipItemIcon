@@ -1,3 +1,4 @@
+## Title: TooltipItemIcon
 ## Notes: Adds the icon for the displayed item to the tooltip
 ## Author: brykrys
 ## SavedVariables: TooltipItemIcon_Saved

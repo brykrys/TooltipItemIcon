@@ -1,1 +1,5 @@
 manual-changelog: changes.txt
+
+ignore:
+  - changes.txt # only used for uploading changes summary
+  - README.md # only used for GitHub display
