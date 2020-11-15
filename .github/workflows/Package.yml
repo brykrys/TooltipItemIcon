@@ -38,12 +38,12 @@ jobs:
           fetch-depth: 50
 
       # once cloned, we just run the GitHub Action for the packager project
-      - name: Package and release
-        uses: BigWigsMods/packager@master
-
-      # another example where we supply additional arguments, this example is specifically to release
-      # for the Classic version of the game
+      # Classic version first, do not upload to WoWI
       - name: Package and release for Classic
         uses: BigWigsMods/packager@master
         with:
           args: -g classic -w 0
+      
+      # Release version second (so it appears at the top in Curse)
+      - name: Package and release
+        uses: BigWigsMods/packager@master
