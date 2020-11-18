@@ -34,10 +34,11 @@ Additionally you can turn off the icons for some of the different types of toolt
 
 Version history:
 
-1.78
+1.78 - 1.782
 - TOC Update for WoW 9.0
 - Fix Spell icons
 - Fix errors from Currency
+- Fix not checking for new version correctly
 - Some code cleanup
 
 1.73 - 1.77
@@ -46,7 +47,6 @@ Version history:
 1.72
 - TOC Update for WoW 7.1
 - Icons for toys in Toy Box, and for Equipment Manager sets, thanks to Resike
-(skipped version 1.71)
 
 1.65 - 1.70
 - Various TOC updates

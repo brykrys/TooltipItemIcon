@@ -1,9 +1,13 @@
-Version 1.781
+Version 1.782
 
-- New files/data for Packager added
+- Fix checking saved variables every time (should only occur when Version changes)
 
-Version 1.78
+- Retail TOC version to 9.0.2
+
+Version 1.78 & 1.781
 
 - Fix Spell icons
 
 - Fix errors from Currency
+
+- New files/data for Packager added

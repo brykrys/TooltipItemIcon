@@ -914,7 +914,7 @@ local function CheckSavedVariables ()
 		return
 	end
 	local oldversion = oldtable.version
-	if oldversion == version then -- only check once when a new version is installed
+	if oldversion == VERSION then -- only check once when a new version is installed
 		return
 	end
 	Print "New version detected; checking saved variables"
