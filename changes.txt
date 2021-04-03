@@ -1,3 +1,9 @@
+Version 1.783
+
+- Retail TOC 9.0.5
+
+- Classic TOC 1.13.6
+
 Version 1.782
 
 - Fix checking saved variables every time (should only occur when Version changes)

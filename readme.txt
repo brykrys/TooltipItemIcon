@@ -34,8 +34,8 @@ Additionally you can turn off the icons for some of the different types of toolt
 
 Version history:
 
-1.78 - 1.782
-- TOC Update for WoW 9.0
+1.78 - 1.783
+- TOC Updates
 - Fix Spell icons
 - Fix errors from Currency
 - Fix not checking for new version correctly
