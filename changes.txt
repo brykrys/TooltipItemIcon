@@ -1,19 +1,5 @@
-Version 1.783
+Version 1.79
 
-- Retail TOC 9.0.5
+Add Burning Crusade 2.5.1 to packager
 
-- Classic TOC 1.13.6
-
-Version 1.782
-
-- Fix checking saved variables every time (should only occur when Version changes)
-
-- Retail TOC version to 9.0.2
-
-Version 1.78 & 1.781
-
-- Fix Spell icons
-
-- Fix errors from Currency
-
-- New files/data for Packager added
+Update TOC for Classic 1.13.7
