@@ -1,5 +1,8 @@
 Version history:
 
+1.791
+- Update TOC for Retail 9.1.0
+
 1.79
 - Add Burning Crusade 2.5.1 to packager
 - Update TOC for Classic 1.13.7
