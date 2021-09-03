@@ -1,5 +1,8 @@
 Version history:
 
+1.792
+- Update TOC for BCC 2.5.2
+
 1.791
 - Update TOC for Retail 9.1.0
 
