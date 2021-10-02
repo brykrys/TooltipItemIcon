@@ -1,3 +1,7 @@
-Version 1.792
+Version 1.793
+
+Change background mode to work with 9.1.5 PTR: no longer uses deprecated SetBackdropColor method.
+
+Update TOC for Classic 1.14.0
 
 Update TOC for BCC 2.5.2

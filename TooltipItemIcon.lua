@@ -256,13 +256,10 @@ HideIconTable.frame = function(data)
 end
 
 HideIconTable.background = function(data)
-	local icon = data.backgroundicon
+	local icon, back = data.backgroundicon, data.backgroundbackplate
 	if icon and icon:IsShown() then
 		icon:Hide()
-	end
-	if data.background_oldr then
-		data.parent:SetBackdropColor(data.background_oldr, data.background_oldg, data.background_oldb, data.background_olda)
-		data.background_oldr, data.background_oldg, data.background_oldb, data.background_olda = false, false, false, false
+		back:Hide()
 	end
 end
 
@@ -314,23 +311,26 @@ DisplayIconTable.frame = function(data, iconpath)
 end
 
 DisplayIconTable.background = function(data, iconpath)
-	local icon = data.backgroundicon
-	local parent = data.parent
+	local icon, back = data.backgroundicon, data.backgroundbackplate
 	-- check/create background texture
 	if not icon then
 		icon = data.parent:CreateTexture(nil, "BACKGROUND", nil, 7)
 		local sb = saved.background
 		icon:SetAlpha(sb.alpha)
 		icon:SetVertexColor(sb.tintr, sb.tintg, sb.tintb)
-		icon:SetAllPoints(parent)
+		icon:SetAllPoints(data.parent)
 		data.backgroundicon = icon
+
+		-- backplate is a solid black texture one level behind icon, covering the tooltip's normal backdrop texture
+		back = data.parent:CreateTexture(nil, "BACKGROUND", nil, 6)
+		back:SetAllPoints(data.parent)
+		back:SetColorTexture(0, 0, 0, 1)
+		data.backgroundbackplate = back
 	end
-	-- adjust backdrop
-	data.background_oldr, data.background_oldg, data.background_oldb, data.background_olda = parent:GetBackdropColor()
-	parent:SetBackdropColor(0, 0, 0, 0)
-	-- show the icon
-	icon:SetTexture (iconpath)
+	-- show the icon and backplate
+	icon:SetTexture(iconpath)
 	icon:Show()
+	back:Show()
 	return iconpath
 end
 
