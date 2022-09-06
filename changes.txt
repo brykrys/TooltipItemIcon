@@ -1,7 +1,5 @@
-Version 1.793
+Version 1.794
 
-Change background mode to work with 9.1.5 PTR: no longer uses deprecated SetBackdropColor method.
+- Update workflow and pkgmeta to support multiple TOC files
 
-Update TOC for Classic 1.14.0
-
-Update TOC for BCC 2.5.2
+- TOCs for 9.2.7, 1.14.3, 2.5.4, 3.4.0

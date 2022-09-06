@@ -1,5 +1,13 @@
 Version history:
 
+1.794
+- Update workflow to use BigWigs Packager V2
+- Update pkgmeta to support multiple TOC files
+- Update TOC for Retail 9.2.7
+- Update TOC for Classic 1.14.3
+- Update TOC for BCC 2.5.4 (unknown if any BCC servers still exist)
+- Add TOC for Wrath 3.4.0
+
 1.793
 - Change background mode to work with 9.1.5 PTR: no longer uses deprecated SetBackdropColor method.
 - Update TOC for Classic 1.14.0

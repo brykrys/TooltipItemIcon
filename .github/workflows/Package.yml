@@ -24,24 +24,12 @@ jobs:
 
       # we first have to clone the AddOn project, this is a required step
       - name: Clone project
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 50
+          fetch-depth: 0
 
-      # once cloned, we run the GitHub Action for the packager project
-      # Classic version first
-      - name: Package and release for Classic
-        uses: BigWigsMods/packager@master
+      # once cloned, we run the GitHub Action for the packager project, using -S to generate multi TOCs
+      - name: Package and release
+        uses: BigWigsMods/packager@v2
         with:
-          args: -g classic
-
-      - name: Package and release for Burning Crusade Classic
-        uses: BigWigsMods/packager@master
-        with:
-          args: -g bcc
-
-      # Release version last (so it appears at the top in Curse)
-      - name: Package and release for Retail
-        uses: BigWigsMods/packager@master
-        with:
-          args: -g retail
+          args: -S -p 0 -w 0

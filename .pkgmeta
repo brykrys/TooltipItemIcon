@@ -1,4 +1,5 @@
 manual-changelog: changes.txt
+enable-toc-creation: yes
 
 ignore:
   - changes.txt
