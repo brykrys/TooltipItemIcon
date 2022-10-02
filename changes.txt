@@ -1,5 +1,5 @@
-Version 1.794
+Version 1.795
 
-- Update workflow and pkgmeta to support multiple TOC files
+- Fix Lua error in Equipment Manager in Wrath
 
-- TOCs for 9.2.7, 1.14.3, 2.5.4, 3.4.0
+
