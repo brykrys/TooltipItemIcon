@@ -1,3 +1,7 @@
+Version 1.796
+
+- TOC update for 10.0.0 pre-patch
+
 Version 1.795
 
 - Fix Lua error in Equipment Manager in Wrath
