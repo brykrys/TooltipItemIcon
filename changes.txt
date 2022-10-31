@@ -2,6 +2,8 @@ Version 1.796
 
 - TOC update for 10.0.0 pre-patch
 
+- Fix Lua error from Currency in Wrath
+
 Version 1.795
 
 - Fix Lua error in Equipment Manager in Wrath
