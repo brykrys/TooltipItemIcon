@@ -10,6 +10,8 @@
 local VERSION = tonumber(GetAddOnMetadata("TooltipItemIcon", "Version")) or 0
 local VERSIONINFO = GetAddOnMetadata("TooltipItemIcon", "X-Release") or "Alpha"
 
+local NEWTOOLTIPS = (TooltipDataProcessor and TooltipDataProcessor.AddTooltipPostCall) and true or false
+
 --------------------------------------------------------------------------------
 -- VARIABLES
 --------------------------------------------------------------------------------
@@ -125,10 +127,16 @@ end
 
 -- get internal data table for this parent tooltip
 -- most other functions will use this data table
+-- Change in 1.797 for WoW 10.0.2: this function will return nil for unregistered tooltips
+-- ### todo: remove this function and replace with simple lookup
 local function GetTooltipData(parent, location, compare)
 	-- get data for this parent frame
+	return IconDataTable[parent]
+end
+
+local function RegisterTooltipData(parent, location, compare)
 	local data = IconDataTable[parent]
-	if not data then -- new frame: create data and do all first-time processing
+	if not data then -- check table does not already exist
 		data = {}
 		data.parent = parent
 		IconDataTable[parent] = data
@@ -394,10 +402,13 @@ end
 --------------------------------------------------------------------------------
 
 -- Multipurpose hook
--- Takes extra parameters to initialize default location and compare status
+-- Takes extra parameters to register the tooltip (if required)
 -- Does NOT check if the icon is already shown, i.e. forces icon based on whatever link is passed
 local function HookMultiplex(parent, link, location, compare)
-	local data = GetTooltipData(parent, location, compare)
+	local data = GetTooltipData(parent)
+	if not data then -- Tooltip not previously seen, register it
+		data = RegisterTooltipData(parent, location, compare)
+	end
 	if not data.disable then
 		DisplayIconDispatch(data, GetTextureFromLink (link))
 	end
@@ -420,7 +431,7 @@ local function HookItem(frame)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 	local _, text = frame:GetItem()
@@ -432,7 +443,7 @@ local function HookItem(frame)
 	end
 end
 
--- Hook for when we know the frame contains an equipemnt set
+-- Hook for when we know the frame contains an equipment set
 -- (OnTooltipSetEquipmentSet)
 -- Note: OnTooltipSetEquipmentSet script does not provide any additional info, so we have to figure out which equipment set is being displayed.
 local function HookEquipmentSet(frame)
@@ -440,7 +451,7 @@ local function HookEquipmentSet(frame)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 
@@ -470,7 +481,7 @@ local function HookToy(frame, id)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 	local _, text, icon = C_ToyBox.GetToyInfo(id)
@@ -486,7 +497,7 @@ local function HookSpell(frame)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 	local name, spellID = frame:GetSpell()
@@ -505,7 +516,7 @@ local function HookCurrencyToken(frame, currency)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 	-- here currency is an index into your own currency list
@@ -531,7 +542,7 @@ local function HookCurrencyByID(frame, currencyID)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 	local texpath
@@ -553,7 +564,7 @@ local function HookMerchantCostItem(frame, index, item)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 	local tpath = GetMerchantItemCostItem(index, item)
@@ -568,7 +579,7 @@ local function HookMerchantItem(frame, index)
 		return
 	end
 	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not data or data.disable or data.shown then
 		return
 	end
 	local link = GetMerchantItemLink(index)
@@ -583,11 +594,11 @@ end
 
 -- Hook for frame:SetHyperlink
 local function HookHyperlink(frame, link)
-	if not frame:IsVisible() then -- check if SetHyperlink caused the frame to close
+	local data = GetTooltipData(frame)
+	if not data or data.disable or data.shown then
 		return
 	end
-	local data = GetTooltipData(frame)
-	if data.disable or data.shown then
+	if not frame:IsVisible() then -- check if SetHyperlink caused the frame to close
 		return
 	end
 	DisplayIconDispatch(data, GetTextureFromLink(link))
@@ -598,7 +609,7 @@ end
 --Hides the icon by passing a nil texture
 local function HookHide (frame)
 	local data = GetTooltipData (frame)
-	if data.disable then
+	if not data or data.disable then
 		return
 	end
 	DisplayIconDispatch(data)
@@ -1080,6 +1091,19 @@ local eventframe = CreateFrame("Frame")
 eventframe:SetScript("OnEvent", OnEvent)
 eventframe:RegisterEvent("VARIABLES_LOADED")
 
+--[[
+	New style Tooltip processing introduced in WoW 10.0.2
+	Basic implementation:
+	OnTooltipSetItem, OnTooltipSetSpell, OnTooltipSetEquipmentSet scripts no longer exist
+	Emulate them using the new API
+	Note that the callbacks occur for ALL tooltips, not just the ones we have registered, so need nil check
+--]]
+if NEWTOOLTIPS then
+	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, HookItem)
+	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, HookSpell)
+	TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.EquipmentSet, HookEquipmentSet)
+end
+
 --------------------------------------------------------------------------------
 -- EXPORTS
 --------------------------------------------------------------------------------
@@ -1107,9 +1131,11 @@ local securehooks = {
 --call this function to automatically hook TTII to your frame
 function TooltipItemIcon_HookFrame(frame, location, compare)
 	if type(frame) == "table" and frame.IsObjectType and frame:IsObjectType("GameTooltip") then
-		frame:HookScript("OnTooltipSetItem", HookItem)
-		frame:HookScript("OnTooltipSetEquipmentSet", HookEquipmentSet)
-		frame:HookScript("OnTooltipSetSpell", HookSpell)
+		if not NEWTOOLTIPS then
+			frame:HookScript("OnTooltipSetItem", HookItem)
+			frame:HookScript("OnTooltipSetEquipmentSet", HookEquipmentSet)
+			frame:HookScript("OnTooltipSetSpell", HookSpell)
+		end
 		frame:HookScript("OnTooltipCleared", HookHide)
 
 		for hook, call in pairs(securehooks) do
@@ -1117,6 +1143,6 @@ function TooltipItemIcon_HookFrame(frame, location, compare)
 				hooksecurefunc(frame, hook, call)
 			end
 		end
-		GetTooltipData(frame, location, compare) -- save location/compare settings
+		RegisterTooltipData(frame, location, compare) -- save location/compare settings
 	end
 end

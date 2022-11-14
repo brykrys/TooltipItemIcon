@@ -1,5 +1,9 @@
 Version history:
 
+1.797 (Beta)
+- TOC update for 10.0.2
+- Initial changes for removed Tooltip scripts and new Tooltip API
+
 1.796
 - TOC update for 10.0.0 pre-patch
 - Fix for error from Currency tab in Wrath
