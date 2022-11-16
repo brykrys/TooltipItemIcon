@@ -1,3 +1,9 @@
+Version 1.798
+
+- Fix for ShoppingTooltips in 10.0.2
+
+- Fix for sometimes getting double icons in Inside or Title mode
+
 Version 1.797
 
 - TOC for WoW 10.0.2

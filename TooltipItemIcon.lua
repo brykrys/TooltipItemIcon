@@ -48,6 +48,13 @@ local GetItemIcon = GetItemIcon
 local GetSpellInfo = GetSpellInfo
 local GetAchievementInfo = GetAchievementInfo
 
+local GetDisplayedItem, GetDisplayedSpell
+if TooltipUtil then
+	-- These are replacements for tooltip:GetItem and tooltip:GetSpell in 10.0.2
+	GetDisplayedItem = TooltipUtil.GetDisplayedItem
+	GetDisplayedSpell = TooltipUtil.GetDisplayedSpell
+end
+
 --------------------------------------------------------------------------------
 -- VARIABLE HANDLING FUNCTIONS
 --------------------------------------------------------------------------------
@@ -357,7 +364,7 @@ DisplayIconTable.inside = function(data, iconpath)
 
 	data.parent:Show() -- required for ShoppingTooltips
 
-	local oldtext = icon:GetText() or ""
+	local oldtext = data.insideoldtext or icon:GetText() or ""
 	data.insideoldtext = oldtext
 
 	-- show the icon
@@ -386,7 +393,7 @@ DisplayIconTable.title = function(data, iconpath)
 
 	--data.parent:Show() -- required for ShoppingTooltips -- todo: test if needed here
 
-	local oldtext = icon:GetText() or ""
+	local oldtext = data.titleoldtext or icon:GetText() or ""
 	data.titleoldtext = oldtext
 
 	-- show the icon
@@ -427,6 +434,7 @@ end
 -- Hook for when we know the frame contains an item
 -- (OnTooltipSetItem)
 local function HookItem(frame)
+	local text
 	if not options.item then
 		return
 	end
@@ -434,7 +442,13 @@ local function HookItem(frame)
 	if not data or data.disable or data.shown then
 		return
 	end
-	local _, text = frame:GetItem()
+	if GetDisplayedItem then
+		local _, t = GetDisplayedItem(frame)
+		text = t
+	else
+		local _, t = frame:GetItem()
+		text = t
+	end
 	if text then
 		text = GetItemIcon(text)
 		if text then
@@ -493,6 +507,7 @@ end
 -- Hook for when we know the frame contains a spell
 -- (OnTooltipSetSpell)
 local function HookSpell(frame)
+	local name, spellID
 	if not options.spell then
 		return
 	end
@@ -500,7 +515,11 @@ local function HookSpell(frame)
 	if not data or data.disable or data.shown then
 		return
 	end
-	local name, spellID = frame:GetSpell()
+	if GetDisplayedSpell then
+		name, spellID = GetDisplayedSpell(frame)
+	else
+		name, spellID = frame:GetSpell()
+	end
 	if name then
 		local _, _, text = GetSpellInfo(spellID)
 		if text then
