@@ -1,5 +1,9 @@
 Version history:
 
+1.80
+- Fix for ItemRefTooltip close button clashing with icon in 'inside' or 'title' mode
+- Code cleanup
+
 1.798 (Beta)
 - Fix for missing GetItem and GetSpell methods where tooltips did not inherit GameTooltipTemplate
 - Fix for double icons in Inside or Title mode where tooltip has multiple hooks affecting one event

@@ -3,9 +3,9 @@
 ## Author: brykrys
 ## SavedVariables: TooltipItemIcon_Saved
 
-## Version: 1.798
-## X-Release: Beta
-## X-Date: 16 November 2022
+## Version: 1.8
+## X-Release: Release
+## X-Date: 23 November 2022
 
 ## Interface: 100002
 ## Interface-Classic: 11403

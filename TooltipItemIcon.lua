@@ -132,15 +132,8 @@ local function DisplayIconDispatch(data, iconpath)
 	end
 end
 
--- get internal data table for this parent tooltip
--- most other functions will use this data table
--- Change in 1.797 for WoW 10.0.2: this function will return nil for unregistered tooltips
--- ### todo: remove this function and replace with simple lookup
-local function GetTooltipData(parent, location, compare)
-	-- get data for this parent frame
-	return IconDataTable[parent]
-end
-
+-- register and initialize a data table for the tooltip
+-- most functions will silently ignore unregistered tooltips
 local function RegisterTooltipData(parent, location, compare)
 	local data = IconDataTable[parent]
 	if not data then -- check table does not already exist
@@ -276,6 +269,7 @@ HideIconTable.background = function(data)
 		icon:Hide()
 		back:Hide()
 	end
+	data.needspadding = nil
 end
 
 HideIconTable.inside = function(data)
@@ -288,6 +282,7 @@ HideIconTable.inside = function(data)
 		data.insideresetheight = nil
 	end
 	data.insideoldtext = nil
+	data.needspadding = nil
 end
 
 HideIconTable.title = function(data)
@@ -367,6 +362,8 @@ DisplayIconTable.inside = function(data, iconpath)
 	local oldtext = data.insideoldtext or icon:GetText() or ""
 	data.insideoldtext = oldtext
 
+	data.needspadding = true -- always use padding for ItemRefTooltip and similar tooltips
+
 	-- show the icon
 	icon:SetFormattedText("%s |T%s:%d|t", oldtext, iconpath, texticonsize)
 	icon:Show()
@@ -396,6 +393,8 @@ DisplayIconTable.title = function(data, iconpath)
 	local oldtext = data.titleoldtext or icon:GetText() or ""
 	data.titleoldtext = oldtext
 
+	data.needspadding = true -- todo: can we calculate whether or not padding is needed in this case?
+
 	-- show the icon
 	icon:SetFormattedText("|T%s:%d|t %s", iconpath, texticonsize, oldtext)
 	icon:Show()
@@ -412,7 +411,7 @@ end
 -- Takes extra parameters to register the tooltip (if required)
 -- Does NOT check if the icon is already shown, i.e. forces icon based on whatever link is passed
 local function HookMultiplex(parent, link, location, compare)
-	local data = GetTooltipData(parent)
+	local data = IconDataTable[parent]
 	if not data then -- Tooltip not previously seen, register it
 		data = RegisterTooltipData(parent, location, compare)
 	end
@@ -438,7 +437,7 @@ local function HookItem(frame)
 	if not options.item then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -464,7 +463,7 @@ local function HookEquipmentSet(frame)
 	if not options.equipmentset then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -494,7 +493,7 @@ local function HookToy(frame, id)
 	if not options.toy then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -511,7 +510,7 @@ local function HookSpell(frame)
 	if not options.spell then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -534,7 +533,7 @@ local function HookCurrencyToken(frame, currency)
 	if not options.token then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -560,7 +559,7 @@ local function HookCurrencyByID(frame, currencyID)
 	if not options.token then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -582,7 +581,7 @@ local function HookMerchantCostItem(frame, index, item)
 	if not options.token then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -597,7 +596,7 @@ local function HookMerchantItem(frame, index)
 	if not options.token then
 		return
 	end
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -613,7 +612,7 @@ end
 
 -- Hook for frame:SetHyperlink
 local function HookHyperlink(frame, link)
-	local data = GetTooltipData(frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable or data.shown then
 		return
 	end
@@ -627,11 +626,22 @@ end
 --when another link is posted into the tooltip.
 --Hides the icon by passing a nil texture
 local function HookHide (frame)
-	local data = GetTooltipData (frame)
+	local data = IconDataTable[frame]
 	if not data or data.disable then
 		return
 	end
 	DisplayIconDispatch(data)
+end
+
+-- Hook for frames that have a ItemRefSetHyperlink method (i.e. uses ItemRefTooltipMixin)
+-- ItemRefSetHyperlink adjusts the Padding for the tooltip, which may cause it to clash with icons in certain modes
+-- This post-hook will readjust the padding if required
+local function HookItemRefSetHyperlink(frame)
+	local data = IconDataTable[frame]
+	if not data then return end
+	if data.needspadding then
+		frame:SetPadding(16, 0)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -1143,6 +1153,7 @@ local securehooks = {
 	SetMerchantCostItem = HookMerchantCostItem,
 	SetMerchantItem = HookMerchantItem,
 	SetToyByItemID = HookToy,
+	ItemRefSetHyperlink = HookItemRefSetHyperlink,
 }
 
 --Alternative hooking Export:

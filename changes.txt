@@ -1,11 +1,5 @@
-Version 1.798
+Version 1.80
 
-- Fix for ShoppingTooltips in 10.0.2
+- Fix for ItemRefTooltip close button sometimes clashing with icon
 
-- Fix for sometimes getting double icons in Inside or Title mode
-
-Version 1.797
-
-- TOC for WoW 10.0.2
-
-- Changes for new Tooltip API in WoW 10.0.2
+- Code cleanup for Release
