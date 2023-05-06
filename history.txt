@@ -1,5 +1,9 @@
 Version history:
 
+1.83
+- Use C_AddOns.GetAddOnMetadata if it exists, in place of GetAddOnMetadata
+- TOC for 10.1.0
+
 1.821
 - TOC update for 10.0.7
 
