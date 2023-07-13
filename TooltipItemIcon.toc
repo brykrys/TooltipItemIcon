@@ -3,11 +3,11 @@
 ## Author: brykrys
 ## SavedVariables: TooltipItemIcon_Saved
 
-## Version: 1.84
+## Version: 1.85
 ## X-Release: Release
-## X-Date: 25 June 2023
+## X-Date: 13 July 2023
 
-## Interface: 100100
+## Interface: 100105
 ## Interface-Classic: 11403
 ## Interface-BCC: 20504
 ## Interface-Wrath: 30402
