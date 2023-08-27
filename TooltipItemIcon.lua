@@ -7,7 +7,7 @@
 -- See end of file for global exports
 -- Documentation can be found in commands.txt and developer.txt
 
-local GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
+local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 local VERSION = tonumber(GetAddOnMetadata("TooltipItemIcon", "Version")) or 0
 local VERSIONINFO = GetAddOnMetadata("TooltipItemIcon", "X-Release") or "Alpha"
 
