@@ -1,4 +1,4 @@
-Version 1.87
+Version 1.88
 
-- Update for 10.1.7
+- Updates for 10.2.0 & 3.4.3
 
