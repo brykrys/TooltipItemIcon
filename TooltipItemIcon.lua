@@ -611,6 +611,35 @@ local function HookMerchantItem(frame, index)
 	DisplayIconDispatch(data, tpath)
 end
 
+-- Handler for Macro datatable from TooltipDataProcessor
+-- Parse datatable for item or spell ID and find related icon
+local function HookMacro(frame, datatable)
+	local data = IconDataTable[frame]
+	if not data or data.disable or data.shown then
+		return
+	end
+	local info = datatable.lines[1] -- Assume lines always exists at this point, and that the info we need is in lines[1]
+	local tooltipType = info.tooltipType
+	local tooltipID = info.tooltipID
+	if tooltipType == 0 then -- item
+		if not options.item then
+			return
+		end
+		local icon = GetItemIcon(tooltipID)
+		if icon then
+			DisplayIconDispatch(data, icon)
+		end
+	elseif tooltipType == 1 then -- spell
+		if not options.spell then
+			return
+		end
+		local _, _, icon = GetSpellInfo(tooltipID)
+		if icon then
+			DisplayIconDispatch(data, icon)
+		end
+	end
+end
+
 -- Hook for frame:SetHyperlink
 local function HookHyperlink(frame, link)
 	local data = IconDataTable[frame]
@@ -1119,6 +1148,7 @@ local function OnEvent(frame) -- only event is VARIABLES_LOADED
 		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, HookItem)
 		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, HookSpell)
 		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.EquipmentSet, HookEquipmentSet)
+		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, HookMacro)
 	end
 
 	-- slash commands
