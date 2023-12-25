@@ -621,7 +621,7 @@ local function HookMacro(frame, datatable)
 	local info = datatable.lines[1] -- Assume lines always exists at this point, and that the info we need is in lines[1]
 	local tooltipType = info.tooltipType
 	local tooltipID = info.tooltipID
-	if tooltipType == 0 then -- item
+	if tooltipType == Enum.TooltipDataType.Item then
 		if not options.item then
 			return
 		end
@@ -629,7 +629,7 @@ local function HookMacro(frame, datatable)
 		if icon then
 			DisplayIconDispatch(data, icon)
 		end
-	elseif tooltipType == 1 then -- spell
+	elseif tooltipType == Enum.TooltipDataType.Spell then
 		if not options.spell then
 			return
 		end

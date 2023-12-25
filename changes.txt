@@ -1,4 +1,5 @@
-Version 1.88
+Version 1.89
 
-- Updates for 10.2.0 & 3.4.3
+- Update for 1.15.0
+- Retail: fix for Macro tooltips for Spells and Items
 

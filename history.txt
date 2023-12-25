@@ -1,5 +1,9 @@
 Version history:
 
+1.89
+- Update TOC for 1.15.0
+- Handle TooltipDataProcessor Macro tooltips for Spells and Items
+
 1.881 beta
 - Test updates for Macro changes in Retail
 
