@@ -1,5 +1,8 @@
 Version history:
 
+1.90
+- Update TOC for 10.2.5
+
 1.89
 - Update TOC for 1.15.0
 - Handle TooltipDataProcessor Macro tooltips for Spells and Items
