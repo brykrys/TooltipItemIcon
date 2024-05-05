@@ -1,3 +1,9 @@
-Version 1.90
+1.91
 
-- Update TOC for 10.2.5
+- Update TOC for 10.2.6 & 1.15.2
+
+- Update for some deprecated functions in Retail
+
+- Add TOC for Cata 4.4.0
+
+- Workaround for detecting which tooltip API to use in Cataclysm
