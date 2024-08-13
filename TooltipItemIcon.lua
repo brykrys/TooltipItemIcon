@@ -46,7 +46,7 @@ local strfind = strfind
 local strsub = strsub
 local next = next
 local GetItemIcon = C_Item.GetItemIconByID or GetItemIcon
-local GetSpellInfo = GetSpellInfo
+local GetSpellInfo = C_Spell.GetSpellTexture
 local GetAchievementInfo = GetAchievementInfo
 
 local GetDisplayedItem, GetDisplayedSpell
@@ -216,7 +216,7 @@ local function GetTextureFromLink(link)
 			return
 		elseif linkType == "spell" or linkType == "enchant" then
 			if options.spell then
-				local _, _, tpath = GetSpellInfo(id)
+				local tpath = GetSpellInfo(id)
 				return tpath
 			end
 			return
@@ -513,7 +513,7 @@ local function HookSpell(frame)
 	end
 	name, spellID = GetDisplayedSpell(frame)
 	if name then
-		local _, _, text = GetSpellInfo(spellID)
+		local text = GetSpellInfo(spellID)
 		if text then
 			DisplayIconDispatch(data, text)
 		end
@@ -625,7 +625,7 @@ local function HookMacro(frame, datatable)
 		if not options.spell then
 			return
 		end
-		local _, _, icon = GetSpellInfo(tooltipID)
+		local icon = GetSpellInfo(tooltipID)
 		if icon then
 			DisplayIconDispatch(data, icon)
 		end
