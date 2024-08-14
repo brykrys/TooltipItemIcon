@@ -1,5 +1,9 @@
 Version history:
 
+1.92
+- Update TOC for 11.0.2 and 1.15.3
+- Update to use C_Spell.GetSpellTexture when available (fix for missing GetSpellInfo)
+
 1.91
 - Update TOC for 10.2.6 & 1.15.2
 - Update for some deprecated functions in Retail
