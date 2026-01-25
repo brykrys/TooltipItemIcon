@@ -28,8 +28,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # once cloned, we run the GitHub Action for the packager project, using -S to generate multi TOCs
+      # once cloned, we run the GitHub Action for the packager project
       - name: Package and release
         uses: BigWigsMods/packager@v2
-        with:
-          args: -S

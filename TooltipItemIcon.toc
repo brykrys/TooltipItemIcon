@@ -3,13 +3,11 @@
 ## Author: brykrys
 ## SavedVariables: TooltipItemIcon_Saved
 
-## Version: 1.92
+## Version: 1.93
 ## X-Release: Release
-## X-Date: 14 August 2024
+## X-Date: 25 January 2026
 
-## Interface: 110002
-## Interface-Classic: 11503
-## Interface-Cata: 40400
+## Interface: 120000, 120001, 50503, 11508
 
 ## X-Curse-Project-ID: 3608
 ## X-WoWI-ID: 11411
