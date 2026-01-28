@@ -1,5 +1,9 @@
 Version history:
 
+1.94
+- Add TOC 2.5.5
+- Workaround a secret error in inside mode
+
 1.93
 - Update TOC for 12.0.0, 5.5.3 and 1.15.8
 - Remove separate TOC files
