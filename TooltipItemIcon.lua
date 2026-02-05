@@ -62,6 +62,15 @@ elseif GetSpellInfo then
 		return texture
 	end
 end
+local GetMerchantItemInfo = GetMerchantItemInfo
+if C_MerchantFrame and C_MerchantFrame.GetItemInfo then -- ### hyrid
+	GetMerchantItemInfo = function(index)
+		local info = C_MerchantFrame.GetItemInfo(index)
+		if info then
+			return info.name, info.texture, info.price, info.stackCount, info.numAvailable, info.isPurchasable, info.isUsable, info.hasExtendedCost, info.currencyID
+		end
+	end
+end
 
 
 local GetDisplayedItem, GetDisplayedSpell
